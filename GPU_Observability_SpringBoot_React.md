@@ -1040,21 +1040,3 @@ DCGM Exporter → Prometheus
 
 ---
 
-## 14. Interview-Ready Talking Points
-
-| Question | Answer |
-|----------|--------|
-| Why WebFlux over Spring MVC? | SSE and async Prometheus queries benefit from non-blocking I/O; handles many concurrent streams with few threads using Project Reactor |
-| Why SSE over polling? | Server pushes data, no repeated HTTP overhead; browser auto-reconnects; lower latency than polling |
-| Why WebSocket for alerts? | Bidirectional — future feature: user can ACK alerts from UI; STOMP adds pub/sub routing cleanly |
-| Why Prometheus as intermediary? | DCGM exporter is pull-based; Prometheus stores history, handles federation, enables PromQL across multi-node clusters |
-| How to scale the service? | Stateless services + Redis pub/sub for multi-instance SSE fan-out; Kubernetes HPA on CPU/memory |
-| Security considerations? | JWT validation in Spring Cloud Gateway, WSS (TLS) for WebSocket, OAuth2 resource server for Prometheus if needed |
-| What is XID error? | NVIDIA driver error code — e.g., XID 79 means GPU fell off the PCIe bus; immediate hardware investigation required |
-| What is ECC DBE vs SBE? | SBE = single-bit, correctable (monitor trend); DBE = double-bit, uncorrectable = data corruption risk, escalate immediately |
-| Why NVLink matters for ML? | All-reduce in distributed training sends gradients every step; NVLink is 10x faster than PCIe, directly impacts training throughput |
-| How do you detect GPU underutilization? | Alert on avg_over_time(DCGM_FI_DEV_GPU_UTIL[30m]) < 10; correlate with scheduler job state |
-
----
-
-*Document created for Interview Preparation — GPU Observability, Infrastructure, and MLOps*
